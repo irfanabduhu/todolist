@@ -1,0 +1,17 @@
+.todo {
+    display: block;
+    padding-bottom: 5px;
+}
+
+label {
+    display: block;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+a {
+    display: inline-block;
+    margin-left: 20px;
+}
