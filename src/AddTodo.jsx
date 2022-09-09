@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoList from "./TodoList";
 
 let identifier = 0;
@@ -8,6 +8,17 @@ let mode = "add";
 const AddTodo = () => {
 	const [title, setTitle] = useState("");
 	const [todoList, setTodoList] = useState([]);
+
+	useEffect(() => {
+		const todos = JSON.parse(localStorage.getItem("todos"));
+		if (todos) {
+			setTodoList(todos);
+		}
+	}, []); // load todos from local storage only the first time.
+
+	useEffect(() => {
+		localStorage.setItem("todos", JSON.stringify(todoList));
+	}, [todoList, todoList.length]);
 
 	function updateTodo(id) {
 		const elem = todoList.find(([i]) => i === id);
