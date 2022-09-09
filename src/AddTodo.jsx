@@ -9,7 +9,7 @@ const AddTodo = () => {
 	const [title, setTitle] = useState("");
 	const [todoList, setTodoList] = useState([]);
 
-	function updateFn(id) {
+	function updateTodo(id) {
 		const elem = todoList.find(([i]) => i === id);
 		const value = elem[1];
 
@@ -22,7 +22,7 @@ const AddTodo = () => {
 		mode = "update";
 	}
 
-	function deleteFn(id) {
+	function deleteTodo(id) {
 		const elem = todoList.find(([i]) => i === id);
 		setTodoList(todoList.filter(([i, _]) => i !== elem[0]));
 	}
@@ -59,8 +59,8 @@ const AddTodo = () => {
 
 			<TodoList
 				todoList={todoList}
-				updateFn={updateFn}
-				deleteFn={deleteFn}
+				updateFn={updateTodo}
+				deleteFn={deleteTodo}
 			/>
 		</div>
 	);

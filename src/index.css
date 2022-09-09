@@ -1,8 +1,9 @@
 * {
   box-sizing: border-box;
 }
+
 body {
-  font-family: "Cascadia Code";
+  font-family: "Cascadia Code", "Source Code Pro", "Victor Mono", monospace;
     font-size: 16px;
     color: firebrick;
 }

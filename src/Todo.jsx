@@ -14,12 +14,12 @@ const Todo = ({ identifier, title, updateFn, deleteFn }) => {
 				/>
 				{title}
 			</label>
-			<a href="#" onClick={() => updateFn(identifier)}>
+			<button className="link-btn" onClick={() => updateFn(identifier)}>
 				Update
-			</a>
-			<a href="#" onClick={() => deleteFn(identifier)}>
+			</button>
+			<button className="link-btn" onClick={() => deleteFn(identifier)}>
 				Delete
-			</a>
+			</button>
 		</div>
 	);
 };
