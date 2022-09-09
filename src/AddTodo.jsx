@@ -1,31 +1,67 @@
 import { useState } from "react";
 import TodoList from "./TodoList";
 
-const todoList = [];
+let identifier = 0;
+let maxId = 0;
+let mode = "add";
 
 const AddTodo = () => {
 	const [title, setTitle] = useState("");
+	const [todoList, setTodoList] = useState([]);
+
+	function updateFn(id) {
+		const elem = todoList.find(([i]) => i === id);
+		const value = elem[1];
+
+		// update DOM
+		setTitle(value);
+		document.getElementById("title").focus();
+
+		// set identifier to the element to be updated:
+		identifier = elem[0];
+		mode = "update";
+	}
+
+	function deleteFn(id) {
+		const elem = todoList.find(([i]) => i === id);
+		setTodoList(todoList.filter(([i, _]) => i !== elem[0]));
+	}
+
+	function saveTodo(e) {
+		e.preventDefault();
+		if (mode === "add") {
+			maxId++;
+			identifier = maxId;
+			todoList.unshift([identifier, title]);
+		} else if (mode === "update") {
+			const index = todoList.findIndex(([i]) => i === identifier);
+			todoList[index] = [identifier, title];
+			mode = "add";
+		}
+
+		setTodoList(todoList);
+		setTitle("");
+	}
 
 	return (
 		<div>
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					todoList.push(title);
-					console.log(todoList);
-					setTitle("");
-				}}
-			>
+			<form onSubmit={saveTodo}>
 				<input
 					id="title"
-					placeholder="title"
+					placeholder="task to procrastinate :v"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
 				/>
-				<button>Add</button>
+				<button type="submit" disabled={!title.length}>
+					{mode === "add" ? "Add" : "Update"}
+				</button>
 			</form>
 
-			<TodoList todoList={todoList} />
+			<TodoList
+				todoList={todoList}
+				updateFn={updateFn}
+				deleteFn={deleteFn}
+			/>
 		</div>
 	);
 };

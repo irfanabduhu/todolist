@@ -12,7 +12,7 @@ body {
   margin: 20px auto;
 }
 
-#title {
+form input {
   padding: 5px 10px;
   margin-right: 20px;
 }
@@ -20,6 +20,8 @@ body {
 button {
   width: 100px;
   padding: 5px 10px;
+  border: 1px solid gray;
+    border-radius: 5px;
 }
 
 .todo-list {
