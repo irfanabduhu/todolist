@@ -7,7 +7,9 @@ let mode = "add";
 
 const AddTodo = () => {
 	const [title, setTitle] = useState("");
-	const [todoList, setTodoList] = useState([]);
+	const [query, setQuery] = useState("");
+	const [todoList, setTodoList] = useState([]); // interacts with the local storage
+	const [view, setView] = useState([]); // interacts with todoList; applies filter
 
 	useEffect(() => {
 		const todos = JSON.parse(localStorage.getItem("todos"));
@@ -18,7 +20,8 @@ const AddTodo = () => {
 
 	useEffect(() => {
 		localStorage.setItem("todos", JSON.stringify(todoList));
-	}, [todoList, todoList.length]);
+		setView(todoList);
+	}, [todoList, todoList.length]); // updates local storage to sync with todoList
 
 	function updateTodo(id) {
 		const elem = todoList.find(([i]) => i === id);
@@ -54,6 +57,26 @@ const AddTodo = () => {
 		setTitle("");
 	}
 
+	function searchTodos(key) {
+		console.log(key);
+		if (!key.length) {
+			setView(todoList);
+			return;
+		}
+		const results = todoList.filter(([_, title]) => title.includes(key));
+		setView(results);
+	}
+
+	function searchTodos(key) {
+		console.log(key);
+		if (!key.length) {
+			setView(todoList);
+			return;
+		}
+		const results = todoList.filter(([_, title]) => title.includes(key));
+		setView(results);
+	}
+
 	return (
 		<div>
 			<form onSubmit={saveTodo}>
@@ -68,8 +91,27 @@ const AddTodo = () => {
 				</button>
 			</form>
 
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					searchTodos(query);
+				}}
+			>
+				<input
+					placeholder="search for tasks"
+					value={query}
+					onChange={(e) => {
+						setQuery(e.target.value);
+						searchTodos(e.target.value);
+					}}
+				/>
+				<button type="submit" disabled={!query.length}>
+					Search
+				</button>
+			</form>
+
 			<TodoList
-				todoList={todoList}
+				todoList={view}
 				updateFn={updateTodo}
 				deleteFn={deleteTodo}
 			/>
