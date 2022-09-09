@@ -67,16 +67,6 @@ const AddTodo = () => {
 		setView(results);
 	}
 
-	function searchTodos(key) {
-		console.log(key);
-		if (!key.length) {
-			setView(todoList);
-			return;
-		}
-		const results = todoList.filter(([_, title]) => title.includes(key));
-		setView(results);
-	}
-
 	return (
 		<div>
 			<form onSubmit={saveTodo}>
